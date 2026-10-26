@@ -1,0 +1,87 @@
+VOIDMETER – Live-DPS-Overlay für EVE Online
+===========================================
+
+START
+  1. Python 3 installieren (python.org, "Add python.exe to PATH" anhaken).
+     Keine weiteren Pakete nötig.
+  2. "VOIDMETER starten.bat" doppelklicken.
+     Zum Ausprobieren ohne EVE: "VOIDMETER Demo.bat".
+  Optional: "Als EXE bauen.bat" erzeugt dist\VOIDMETER.exe (dann ohne Python nutzbar).
+
+IN EVE
+  - Fenster-Modus "Fenster" oder "Vollbild (randlos)" nutzen, nicht exklusives Vollbild,
+    sonst liegt kein Overlay darüber.
+  - Logs müssen aktiv sein (Standard): Einstellungen > Allgemein > "Logs in Datei speichern".
+  - Der Ordner Dokumente\EVE\logs\Gamelogs wird automatisch gefunden (auch mit OneDrive).
+    Sonst: Rechtsklick > "Log-Ordner wählen …".
+  - Funktioniert mit deutschem, englischem, russischem, französischem, japanischem
+    und chinesischem Client.
+
+BEDIENUNG
+  Kopfzeile ziehen ............ verschieben
+  Ecke unten rechts ziehen .... skalieren
+  Doppelklick Kopfzeile ....... Kompakt-Modus
+  Rechtsklick ................. Menü (Charakter, Flotte, Design, Farben, Deckkraft, Größe …)
+  SOLO / FLOTTE oben links .... Tabs umschalten
+  Strg+Shift+F9 ............... Click-Through-Lock (Maus geht durchs Overlay ins Spiel)
+  "FENSTER 10s" unten links ... DPS-Mittelungsfenster durchschalten
+  WAFFEN/ZIELE/ANGREIFER/FEED . Listen unten im Cockpit umschalten
+  (i)-Knopf ................... Waffen-Info: Reichweite, Schaden, Stärken, Schwächen, Konter
+  RESET unten rechts .......... Session-Werte zurücksetzen
+  Esc ......................... beenden
+
+ANZEIGE
+  DPS OUT / DPS IN ..... Schaden pro Sekunde (gleitendes Fenster), Ring = Anteil am Peak
+  NET HP/S ............. erhaltene Reps minus eingehender Schaden
+  SIGNAL ............... letzte 60 s: oben Schaden raus, unten Schaden rein
+  REP / CAP / NEUT ..... Remote-Reps, Cap-Transfer und Neuts/Nos raus und rein
+  HIT PROFILE .......... Trefferquote und Verteilung der Trefferqualität
+  WAFFEN / ZIELE ....... Schadensanteile der Session
+  ANGREIFER ............ wer dich beschießt, mit Schiff, Waffe und Reichweite in Klammern
+  FEED ................. die letzten Treffer live (raus » / rein «)
+
+SCHIFFE & KONTER
+  Vor jeder Waffe steht das Schiff mit Icon (Farbe = Rasse/Fraktion, Größe = Schiffsklasse),
+  z. B. "Loki · Caldari Navy Scourge Light Missile (≈ 42,2 km)".
+  Klick auf Icon/Schiffsname = Konter-Info: welche Schadensart du gegen Schild- bzw.
+  Panzer-Fit nehmen solltest (passend zu deiner Waffe, z. B. "Nova" bei Raketen),
+  üblicher Tank und Resistenz-Balken. Bei NPCs: Schwäche der Fraktion (Guristas, Angel …).
+  Resistenzen = Rumpf-Basiswerte (T2/T3 nach EVE-Uni-Regel berechnet) – Hardener im Fit
+  verschieben sie, die Löcher bleiben aber meist gleich.
+
+WAFFEN-REICHWEITEN
+  Werte in Klammern = Optimal + Falloff (Turrets) bzw. maximale Flugweite (Raketen),
+  mit allen Skills auf V, aber OHNE Schiffsboni und Module. Ein bonussiertes Schiff
+  (z. B. +10 %/Level) mit Tracking-Computer oder Missile-Guidance kommt deutlich weiter.
+  Entropic, Vorton und Sentry-Drohnen sind grobe Richtwerte.
+  KAMPF ................ läuft ein Gefecht, Dauer, Schaden und Ø-DPS; nach 15 s Ruhe
+                         wird es als "LETZTER" angezeigt und in encounters.csv gespeichert
+
+LAYOUTS (Rechtsklick > Layout) – komplett andere Anordnung
+  Cockpit .... alles im Blick: Ringe, Signal, Kacheln, Listen (Standard, mit Kompakt-Modus)
+  Leiste ..... flaches Band (780×100) für den Bildschirmrand, mit letztem Angreifer
+  Turm ....... schmal (240 breit) mit großem Kampf-Feed
+  Orbit ...... drei Ringe ineinander (DPS raus / rein / Reps) mit Treffer-Funken
+
+STIL (Rechtsklick > Stil, Farben separat unter > Farben)
+  HUD ........ Segment-Ringe, Glow, Scanlines (Standard)
+  Neon ....... Synthwave-Look, starker Glow, Horizont-Gitter
+  Minimal .... flach, dünne Bögen, ohne Effekte
+  Terminal ... Phosphor-Grün, Monospace-Schrift, Block-Anzeigen
+  Farben: Void, Amarr, Minmatar, Gallente, Caldari, Neon, Terminal, Graphite (frei kombinierbar)
+
+FLOTTE
+  Tab "FLOTTE" oder Rechtsklick > Flotte > "Flotte als eigenes Fenster" (zweites Overlay).
+  - Alle eigenen Chars auf diesem PC (Multiboxing) erscheinen automatisch.
+  - Flottenkollegen: Rechtsklick > Flotte > Verbindung einrichten …
+      * Einer wählt "Ich hoste die Flotte" (Port 47820 im Router weiterleiten und in der
+        Windows-Firewall erlauben), alle anderen "Mit Host / Relay verbinden" + dessen IP.
+      * Alle brauchen denselben Flotten-Code.
+  - Ohne Portfreigabe: Relay auf einem eigenen Server laufen lassen (z. B. Pterodactyl
+    mit Python-Egg oder VPS), alle verbinden sich dorthin:
+        python voidmeter.py --relay --port 47820 --code MEINCODE
+    (tkinter wird dafür nicht gebraucht; die Umgebungsvariable SERVER_PORT wird genutzt,
+     falls gesetzt.)
+  - Übertragen werden nur Kampfwerte (DPS, Reps, Verlauf, aktuelles Ziel), unverschlüsselt.
+
+Einstellungen und Kampf-Log liegen in %APPDATA%\VOIDMETER\
